@@ -1,0 +1,23 @@
+{
+  "parent": "tamedphantoms:release_phantom",
+  "display": {
+    "icon": {
+      "id": "minecraft:water_bucket"
+    },
+    "title": {
+      "translate": "advancements.tamedphantomscolors.shake_off_paint.title"
+    },
+    "description": {
+      "translate": "advancements.tamedphantomscolors.shake_off_paint.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "shook_off": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

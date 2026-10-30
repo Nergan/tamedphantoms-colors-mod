@@ -7,6 +7,7 @@ import com.tamedphantomscolors.mod.TamedPhantomsColors
 import net.minecraft.core.BlockPos
 import net.minecraft.gametest.framework.GameTest
 import net.minecraft.gametest.framework.GameTestHelper
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.DyeColor
@@ -83,14 +84,43 @@ object PaintGameTests {
         val owner = helper.makeMockPlayer(GameType.SURVIVAL)
         val stranger = helper.makeMockPlayer(GameType.SURVIVAL)
         val pet = spawnPet(helper, owner)
-        val dye = ItemStack(Items.PURPLE_DYE)
+        pet.equipSaddle(ItemStack(Items.SADDLE), null)
+        val dye = ItemStack(Items.PURPLE_DYE, 2)
         click(stranger, pet, dye)
+        click(stranger, pet, dye, saddleTop(pet))
         val ink = ItemStack(Items.GLOW_INK_SAC)
         click(stranger, pet, ink)
-        check(helper, pet.bodyDye == TamedPhantomEntity.NO_DYE, "a stranger must not dye, got ${pet.bodyDye}")
+        check(helper, pet.bodyDye == TamedPhantomEntity.NO_DYE, "a stranger must not dye the body, got ${pet.bodyDye}")
+        check(helper, pet.saddleDye == TamedPhantomEntity.NO_DYE, "a stranger must not dye the saddle, got ${pet.saddleDye}")
         check(helper, !pet.luminous, "a stranger must not make it glow")
-        check(helper, dye.count == 1 && ink.count == 1, "nothing should be spent")
+        check(helper, dye.count == 2 && ink.count == 1, "nothing should be spent")
         check(helper, !pet.isDefending(), "a tamed phantom does not get angry at a stranger's dye")
+        click(owner, pet, ItemStack(Items.RED_DYE))
+        val brush = ItemStack(Items.BRUSH)
+        click(stranger, pet, brush)
+        check(helper, pet.bodyDye == DyeColor.RED.id, "a stranger must not brush the paint off, got ${pet.bodyDye}")
+        check(helper, brush.damageValue == 0, "the stranger's brush should not wear")
+        helper.succeed()
+    }
+
+    @GameTest(template = TEMPLATE)
+    @JvmStatic
+    fun everyPaintStepGrantsItsAdvancement(helper: GameTestHelper) {
+        val owner = helper.makeMockServerPlayerInLevel()
+        val pet = spawnPet(helper, owner)
+        click(owner, pet, ItemStack(Items.RED_DYE))
+        click(owner, pet, ItemStack(Items.GLOW_INK_SAC))
+        click(owner, pet, ItemStack(Items.BRUSH))
+        click(owner, pet, ItemStack(Items.BLUE_DYE))
+        pet.release()
+        click(owner, pet, ItemStack(Items.YELLOW_DYE))
+        val server = helper.level.server
+        for (path in listOf("dye_phantom", "glow_phantom", "brush_phantom", "shake_off_paint", "refused_paint")) {
+            val id = ResourceLocation.fromNamespaceAndPath(TamedPhantomsColors.MOD_ID, path)
+            val holder = server.advancements.get(id)
+            check(helper, holder != null, "advancement $id should be loaded")
+            check(helper, owner.advancements.getOrStartProgress(holder!!).isDone, "advancement $id should be granted")
+        }
         helper.succeed()
     }
 

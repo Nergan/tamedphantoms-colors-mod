@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "tamedphantomscolors",
+  "version": "${version}",
+  "name": "Tamed Phantoms Colors",
+  "description": "Dye tamed phantoms and their saddles, and make them glow. An addon for Tamed Phantoms.",
+  "authors": ["Tamed Phantoms contributors"],
+  "contact": {
+    "homepage": "https://github.com/Nergan/tamedphantoms-colors-mod",
+    "issues": "https://github.com/Nergan/tamedphantoms-colors-mod/issues"
+  },
+  "license": "MPL-2.0",
+  "icon": "logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.tamedphantomscolors.mod.loader.fabric.TamedPhantomsColorsFabric"],
+    "lambdynlights:initializer": ["com.tamedphantomscolors.mod.compat.ColorsDynamicLights"]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.5",
+    "minecraft": "26.3",
+    "java": ">=25",
+    "fabric-api": "*",
+    "fabric-language-kotlin": ">=1.14.2+kotlin.2.4.21",
+    "tamedphantoms": ">=1.0.6"
+  },
+  "suggests": {
+    "lambdynlights": "*"
+  }
+}

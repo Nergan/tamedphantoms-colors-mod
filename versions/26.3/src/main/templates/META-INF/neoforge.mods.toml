@@ -1,0 +1,49 @@
+# Значения вида ${...} подставляет задача generateModMetadata.
+license = "${mod_license}"
+issueTrackerURL = "https://github.com/Nergan/tamedphantoms-colors-mod/issues"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+iconFile = "logo.png"
+displayURL = "https://github.com/Nergan/tamedphantoms-colors-mod"
+authors = "${mod_authors}"
+description = '''
+${mod_description}
+
+Dye a tamed phantom and its saddle, make it glow with a glow ink sac, and clean it with a brush.
+Краситель окрашивает прирученного фантома и его седло, светящиеся чернила заставляют светиться, кисть отмывает.
+'''
+
+# LambDynamicLights вызывает этот класс сам, только на клиенте и только если он установлен.
+[modproperties."${mod_id}"."yumi:entrypoints"]
+"lambdynlights:initializer" = "com.tamedphantomscolors.mod.compat.ColorsDynamicLights"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neo_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "kotlinforforge"
+type = "required"
+versionRange = "${kff_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "tamedphantoms"
+type = "required"
+versionRange = "${tamedphantoms_version_range}"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,0 +1,23 @@
+{
+  "parent": "tamedphantoms:tame_phantom",
+  "display": {
+    "icon": {
+      "id": "minecraft:red_dye"
+    },
+    "title": {
+      "translate": "advancements.tamedphantomscolors.dye_phantom.title"
+    },
+    "description": {
+      "translate": "advancements.tamedphantomscolors.dye_phantom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dyed": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

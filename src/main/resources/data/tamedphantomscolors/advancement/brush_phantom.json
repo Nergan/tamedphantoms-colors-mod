@@ -1,0 +1,23 @@
+{
+  "parent": "tamedphantomscolors:dye_phantom",
+  "display": {
+    "icon": {
+      "id": "minecraft:brush"
+    },
+    "title": {
+      "translate": "advancements.tamedphantomscolors.brush_phantom.title"
+    },
+    "description": {
+      "translate": "advancements.tamedphantomscolors.brush_phantom.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "brushed": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

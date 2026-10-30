@@ -60,6 +60,28 @@ jobs:
       - name: Build and test
         run: gradle build --stacktrace
 
+      - name: Set up JDK 21 for 26.3
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Set up JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: "25"
+          distribution: "temurin"
+
+      - name: Set up Gradle 9.7.0
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          # services.gradle.org publishes 9.7.0, not the short form 9.7.
+          gradle-version: "9.7.0"
+
+      - name: Build 26.3
+        working-directory: versions/26.3
+        run: gradle build --stacktrace
+
       - name: Collect release jars
         run: |
           set -euo pipefail
@@ -77,7 +99,19 @@ jobs:
             "${{ steps.versions.outputs.fabric_kotlin_version }}" \
             "${{ steps.versions.outputs.patchouli_fabric_version }}" \
             "${{ steps.versions.outputs.cloth_config_modrinth_version }}"
-          ls -lh release-assets
+          cp -v "versions/26.3/build/libs/tamedphantomscolors-neoforge-26.3-${ver}.jar" release-assets/
+          cp -v "versions/26.3/fabric/build/libs/tamedphantomscolors-fabric-26.3-${ver}.jar" release-assets/
+          prop26() { grep -E "^$1=" versions/26.3/gradle.properties | cut -d= -f2- | tr -d '\r'; }
+          mkdir -p companions-26.3
+          chmod +x .github/scripts/fetch-companion-jars-26.3.sh
+          .github/scripts/fetch-companion-jars-26.3.sh \
+            companions-26.3 \
+            "${{ steps.versions.outputs.tamedphantoms_version }}" \
+            "$(prop26 kff_version)" \
+            "$(prop26 fabric_api_version)" \
+            "$(prop26 fabric_kotlin_version)" \
+            "$(prop26 cloth_config_modrinth_version)"
+          ls -lh release-assets companions-26.3
 
       - name: Publish split GitHub releases
         env:
@@ -142,6 +176,44 @@ jobs:
             release-assets/fabric-language-kotlin-*.jar \
             release-assets/cloth-config-*.jar \
             release-assets/Patchouli-*-FABRIC.jar
+          stage minecraft-26.3-neoforge \
+            "tamed phantoms colors for minecraft 26.3 neoforge" \
+            "$(cat <<'EOF'
+          Minecraft **26.3** / NeoForge. Put the jars you need into the `mods` folder.
+
+          | File | Required | Source | License |
+          | --- | --- | --- | --- |
+          | `tamedphantomscolors-neoforge-26.3-${{ steps.versions.outputs.mod_version }}.jar` | Yes | this addon | MPL-2.0 |
+          | `tamedphantoms-neoforge-26.3-${{ steps.versions.outputs.tamedphantoms_version }}.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) | MPL-2.0 |
+          | `kotlinforforge-*.jar` | Yes | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) | LGPL-2.1 |
+
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so there is no guidebook page. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
+          EOF
+          )" \
+            release-assets/tamedphantomscolors-neoforge-26.3-*.jar \
+            companions-26.3/tamedphantoms-neoforge-26.3-*.jar \
+            companions-26.3/kotlinforforge-*.jar
+          stage minecraft-26.3-fabric \
+            "tamed phantoms colors for minecraft 26.3 fabric" \
+            "$(cat <<'EOF'
+          Minecraft **26.3** / Fabric. Put the jars you need into the `mods` folder.
+
+          | File | Required | Source | License |
+          | --- | --- | --- | --- |
+          | `tamedphantomscolors-fabric-26.3-${{ steps.versions.outputs.mod_version }}.jar` | Yes | this addon | MPL-2.0 |
+          | `tamedphantoms-fabric-26.3-${{ steps.versions.outputs.tamedphantoms_version }}.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) | MPL-2.0 |
+          | `fabric-api-*.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) | Apache-2.0 |
+          | `fabric-language-kotlin-*.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) | Apache-2.0 |
+          | `cloth-config-*.jar` | Yes, for Tamed Phantoms | [Cloth Config](https://modrinth.com/mod/cloth-config) | LGPL-3.0 |
+
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so there is no guidebook page. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
+          EOF
+          )" \
+            release-assets/tamedphantomscolors-fabric-26.3-*.jar \
+            companions-26.3/tamedphantoms-fabric-26.3-*.jar \
+            companions-26.3/fabric-api-*.jar \
+            companions-26.3/fabric-language-kotlin-*.jar \
+            companions-26.3/cloth-config-*.jar
           python3 .github/scripts/publish-split-releases.py release-split
 
       - name: Check Modrinth token
@@ -166,7 +238,9 @@ jobs:
           python3 .github/scripts/replace-modrinth-versions.py \
             tamed-phantoms-colors \
             "${{ steps.versions.outputs.mod_version }}" \
-            "${{ steps.versions.outputs.mod_version }}-fabric"
+            "${{ steps.versions.outputs.mod_version }}-fabric" \
+            "${{ steps.versions.outputs.mod_version }}+26.3" \
+            "${{ steps.versions.outputs.mod_version }}+26.3-fabric"
 
       - name: Publish Modrinth
         if: steps.modrinth_token.outputs.present == 'true'
@@ -218,6 +292,55 @@ jobs:
             fabric-language-kotlin(required){modrinth:Ha28R6CL}
             lambdynamiclights(optional){modrinth:yBW8D80W}
             patchouli(optional){modrinth:nU0bVIaL}
+
+      - name: Publish Modrinth 26.3 NeoForge
+        if: steps.modrinth_token.outputs.present == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: tamed-phantoms-colors
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: true
+          name: ${{ steps.versions.outputs.mod_version }} for 26.3
+          version: ${{ steps.versions.outputs.mod_version }}+26.3
+          version-type: release
+          changelog: |
+            Minecraft 26.3 / NeoForge. Tamed Phantoms Colors ${{ steps.versions.outputs.mod_version }}.
+          loaders: |
+            neoforge
+          game-versions: |
+            26.3
+          java: |
+            25
+          files: release-assets/tamedphantomscolors-neoforge-26.3-${{ steps.versions.outputs.mod_version }}.jar
+          dependencies: |
+            tamed-phantoms(required){modrinth:tamed-phantoms}
+            kotlin-for-forge(required){modrinth:ordsPcFz}
+            lambdynamiclights(optional){modrinth:yBW8D80W}
+
+      - name: Publish Modrinth 26.3 Fabric
+        if: steps.modrinth_token.outputs.present == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: tamed-phantoms-colors
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: false
+          name: ${{ steps.versions.outputs.mod_version }} Fabric for 26.3
+          version: ${{ steps.versions.outputs.mod_version }}+26.3-fabric
+          version-type: release
+          changelog: |
+            Minecraft 26.3 / Fabric. Tamed Phantoms Colors ${{ steps.versions.outputs.mod_version }}.
+          loaders: |
+            fabric
+          game-versions: |
+            26.3
+          java: |
+            25
+          files: release-assets/tamedphantomscolors-fabric-26.3-${{ steps.versions.outputs.mod_version }}.jar
+          dependencies: |
+            tamed-phantoms(required){modrinth:tamed-phantoms}
+            fabric-api(required){modrinth:P7dR8mSH}
+            fabric-language-kotlin(required){modrinth:Ha28R6CL}
+            lambdynamiclights(optional){modrinth:yBW8D80W}
 
       - name: Delete replaced Modrinth versions
         if: steps.modrinth_token.outputs.present == 'true'

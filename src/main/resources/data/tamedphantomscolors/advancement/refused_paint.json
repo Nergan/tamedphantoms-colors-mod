@@ -1,0 +1,23 @@
+{
+  "parent": "tamedphantoms:release_phantom",
+  "display": {
+    "icon": {
+      "id": "minecraft:yellow_dye"
+    },
+    "title": {
+      "translate": "advancements.tamedphantomscolors.refused_paint.title"
+    },
+    "description": {
+      "translate": "advancements.tamedphantomscolors.refused_paint.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "refused": {
+      "trigger": "minecraft:impossible"
+    }
+  }
+}

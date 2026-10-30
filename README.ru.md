@@ -2,63 +2,82 @@
 
 **[English](README.md)** · **[Русский](README.ru.md)**
 
-Аддон к [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) для **Minecraft 1.21.1** на NeoForge и Fabric. Хозяин может покрасить прирученного фантома и его седло, заставить его светиться и отмыть обратно. Ставится один загрузчик, не оба сразу. Сборка NeoForge идёт через [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge), сборка Fabric — через [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin).
+Аддон к [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) для **Minecraft 1.21.1 и 26.3** на NeoForge и Fabric. Хозяин может покрасить прирученного фантома и его седло, заставить его светиться и отмыть обратно. Ставится один загрузчик, не оба сразу. Сборки NeoForge идут через [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge), сборки Fabric — через [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin).
 
 ## Возможности
 
 - **Краситель.** Хозяин кликает правой кнопкой мыши любым красителем по прирученному фантому. Тело принимает цвет, глаза остаются своими, а след от крыльев становится того же цвета. Краситель по седлу красит только седло, так что тело и седло красятся отдельно. Тот же цвет второй раз краситель не тратит.
 - **Свечение.** Мешок светящихся чернил превращает фантома в источник света уровня 15, как лампа. Фантом рисуется в полную яркость, поэтому окрашенный светится своим цветом. Свет на блоках вокруг даёт [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) на клиенте. Свет в Minecraft бесцветный, поэтому на блоках он остаётся белым.
 - **Кисть.** Кисть смывает краску и свечение с фантома и его седла. Фантом сухо отряхивается, без брызг, а кисть теряет одну единицу прочности.
+- **Только хозяин.** Красить, зажигать и отмывать прирученного фантома и его седло может только хозяин. Краситель, чернила и кисть другого игрока ничего не делают и не тратятся.
 - **Освобождённые фантомы.** Покрасить можно только прирученного. Краситель или светящиеся чернила по освобождённому фантому злят его: сердитые тучки, рык, и какое-то время он нападает на этого игрока, как при самозащите.
 - **Освобождение.** Когда хозяин отпускает окрашенного фантома, тот стряхивает краску брызгами её цвета и возвращается к своему цвету. Седло тоже теряет краску. Седло, снятое ножницами, теряет краску так же.
-- **Книга.** С [Patchouli](https://modrinth.com/mod/patchouli) в книге Tamed Phantoms появляется страница «Краски» в разделе о приручении.
+- **Достижения.** «Теперь мы отличаемся» за первую покраску, «Свет во тьме» за светящиеся чернила, «Что естественно, то правильно» за кисть, «Свободен от ярлыков», когда освобождённый фантом стряхивает краску, и «Я это не надену!» за попытку покрасить освобождённого фантома. Они стоят рядом с достижениями Tamed Phantoms.
+- **Книга.** С [Patchouli](https://modrinth.com/mod/patchouli) на 1.21.1 в книге Tamed Phantoms появляется страница «Краски» в разделе о приручении. Для 26.3 сборки Patchouli нет.
 
 ## Загрузки
 
-Готовые jar лежат в [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mod/releases/latest). Пуш в `main` обновляет страницу релиза для каждого загрузчика. На странице есть `all-jars.zip`. Скачайте один набор и положите эти файлы в папку `mods`. Файл `*-sources.jar` в `mods` класть не нужно.
+Готовые jar лежат в [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mod/releases/latest). Пуш в `main` обновляет страницу релиза для каждой пары версии Minecraft и загрузчика. На странице есть `all-jars.zip`. Скачайте один набор и положите эти файлы в папку `mods`. Файл `*-sources.jar` в `mods` класть не нужно.
 
-### NeoForge
+### Minecraft 1.21.1, NeoForge
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-neoforge-1.21.1-1.0.0.jar` | Да | этот аддон, NeoForge 1.21.1 |
-| `tamedphantoms-neoforge-1.21.1-1.0.5.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.5 или новее |
+| `tamedphantomscolors-neoforge-1.21.1-1.1.0.jar` | Да | этот аддон |
+| `tamedphantoms-neoforge-1.21.1-1.0.6.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.6 или новее |
 | `kotlinforforge-5.8.0-all.jar` | Да | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
 | `Patchouli-1.21.1-93-NEOFORGE.jar` | Нет | [Patchouli](https://modrinth.com/mod/patchouli), только для книги |
 
-### Fabric
+### Minecraft 1.21.1, Fabric
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-fabric-1.21.1-1.0.0.jar` | Да | этот аддон, Fabric 1.21.1 |
-| `tamedphantoms-fabric-1.21.1-1.0.5.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.5 или новее |
+| `tamedphantomscolors-fabric-1.21.1-1.1.0.jar` | Да | этот аддон |
+| `tamedphantoms-fabric-1.21.1-1.0.6.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.6 или новее |
 | `fabric-api-0.116.17+1.21.1.jar` | Да | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | `fabric-language-kotlin-1.13.2+kotlin.2.1.20.jar` | Да | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
 | `cloth-config-15.0.140-fabric.jar` | Да | [Cloth Config](https://modrinth.com/mod/cloth-config), его требует Tamed Phantoms |
 | `Patchouli-1.21.1-93-FABRIC.jar` | Нет | [Patchouli](https://modrinth.com/mod/patchouli), только для книги |
 
-LambDynamicLights в релиз не входит: для настоящего света поставьте его с [Modrinth](https://modrinth.com/mod/lambdynamiclights) (4.8.11 или новее для 1.21.1).
+### Minecraft 26.3, NeoForge
+
+| Файл | Обязателен | Что это |
+| --- | --- | --- |
+| `tamedphantomscolors-neoforge-26.3-1.1.0.jar` | Да | этот аддон |
+| `tamedphantoms-neoforge-26.3-1.0.6.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.6 или новее |
+| `kotlinforforge-6.4.0-all.jar` | Да | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
+
+### Minecraft 26.3, Fabric
+
+| Файл | Обязателен | Что это |
+| --- | --- | --- |
+| `tamedphantomscolors-fabric-26.3-1.1.0.jar` | Да | этот аддон |
+| `tamedphantoms-fabric-26.3-1.0.6.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.6 или новее |
+| `fabric-api-0.162.0+26.3.jar` | Да | [Fabric API](https://modrinth.com/mod/fabric-api) |
+| `fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar` | Да | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
+| `cloth-config-fabric-26.3.159.jar` | Да | [Cloth Config](https://modrinth.com/mod/cloth-config), его требует Tamed Phantoms |
+
+LambDynamicLights в релиз не входит: для настоящего света поставьте его с [Modrinth](https://modrinth.com/mod/lambdynamiclights) (на 1.21.1 — 4.8.11+1.21.1 или новее, на 26.3 — 4.13.0+26.3 или новее).
 
 ## Требования
 
-| Компонент | Версия |
-| --- | --- |
-| Minecraft | 1.21.1 |
-| Tamed Phantoms | 1.0.5 или новее, того же загрузчика |
-| NeoForge | 21.1.209 или новее |
-| Kotlin for Forge | 5.8.0, сборка **NeoForge** |
-| Fabric Loader | 0.16.10 или новее |
-| Fabric API | 0.116.17+1.21.1 |
-| Fabric Language Kotlin | 1.13.2+kotlin.2.1.20 |
-| Java | 21 |
-| LambDynamicLights | необязательно, только клиент, 4.8.11+1.21.1 |
-| Patchouli | необязательно, 1.21.1-93 того же загрузчика |
+| Компонент | 1.21.1 | 26.3 |
+| --- | --- | --- |
+| Tamed Phantoms | 1.0.6 или новее, того же загрузчика | 1.0.6 или новее, того же загрузчика |
+| NeoForge | 21.1.209 или новее | 26.3.0.76 или новее |
+| Kotlin for Forge | 5.8.0, сборка **NeoForge** | 6.4.0 |
+| Fabric Loader | 0.16.10 или новее | 0.19.5 или новее |
+| Fabric API | 0.116.17+1.21.1 | 0.162.0+26.3 |
+| Fabric Language Kotlin | 1.13.2+kotlin.2.1.20 | 1.14.2+kotlin.2.4.21 |
+| Java | 21 | 25 |
+| LambDynamicLights | необязательно, только клиент, 4.8.11+1.21.1 | необязательно, только клиент, 4.13.0+26.3 |
+| Patchouli | необязательно, 1.21.1-93 того же загрузчика | для 26.3 нет |
 
 ## Установка
 
-1. Поставьте Tamed Phantoms 1.0.5 или новее со всеми его зависимостями.
-2. Положите в `mods` jar аддона для того же загрузчика.
-3. По желанию добавьте LambDynamicLights на каждый клиент для настоящего света и Patchouli для страницы в книге.
+1. Поставьте Tamed Phantoms 1.0.6 или новее со всеми его зависимостями для своей версии Minecraft и загрузчика.
+2. Положите в `mods` jar аддона для той же версии и загрузчика.
+3. По желанию добавьте LambDynamicLights на каждый клиент для настоящего света, а на 1.21.1 — Patchouli для страницы в книге.
 
 Аддон нужен и на сервере, и на клиентах.
 

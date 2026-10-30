@@ -19,7 +19,7 @@ import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.DyeItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import org.joml.Vector3f
+import net.minecraft.world.phys.Vec3
 
 /** Краситель, светящиеся чернила и кисть по фантому. Родитель зовёт это только на сервере. */
 object PhantomPaint {
@@ -49,24 +49,30 @@ object PhantomPaint {
         )
         when (action) {
             PaintRules.Action.PASS -> return null
-            PaintRules.Action.PROVOKE -> phantom.provokeBy(player)
+            PaintRules.Action.PROVOKE -> {
+                phantom.provokeBy(player)
+                ColorAdvancements.grant(player, ColorAdvancements.Kind.REFUSED)
+            }
             PaintRules.Action.PAINT_BODY -> {
                 phantom.bodyDye = dye!!.id
                 spend(player, stack)
                 puff(level, phantom, dust(dye.textureDiffuseColor), saddle = false)
                 sound(level, phantom, SoundEvents.DYE_USE)
+                ColorAdvancements.grant(player, ColorAdvancements.Kind.DYE)
             }
             PaintRules.Action.PAINT_SADDLE -> {
                 phantom.saddleDye = dye!!.id
                 spend(player, stack)
                 puff(level, phantom, dust(dye.textureDiffuseColor), saddle = true)
                 sound(level, phantom, SoundEvents.DYE_USE)
+                ColorAdvancements.grant(player, ColorAdvancements.Kind.DYE)
             }
             PaintRules.Action.GLOW -> {
                 phantom.luminous = true
                 spend(player, stack)
                 puff(level, phantom, ParticleTypes.GLOW, saddle = false)
                 sound(level, phantom, SoundEvents.GLOW_INK_SAC_USE)
+                ColorAdvancements.grant(player, ColorAdvancements.Kind.GLOW)
             }
             PaintRules.Action.CLEAN -> {
                 wipe(phantom)
@@ -74,6 +80,7 @@ object PhantomPaint {
                 sound(level, phantom, SoundEvents.BRUSH_GENERIC)
                 player.awardStat(Stats.ITEM_USED.get(stack.item))
                 stack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(hand))
+                ColorAdvancements.grant(player, ColorAdvancements.Kind.BRUSH)
             }
         }
         return InteractionResult.SUCCESS
@@ -88,6 +95,7 @@ object PhantomPaint {
         ) ?: return
         wipe(phantom)
         phantom.startShake(spray)
+        ColorAdvancements.grant(previousOwner, ColorAdvancements.Kind.SHAKE_OFF)
     }
 
     private fun toolOf(stack: ItemStack): PaintRules.Tool? = when {
@@ -114,10 +122,7 @@ object PhantomPaint {
         if (!player.abilities.instabuild) stack.shrink(1)
     }
 
-    private fun dust(rgb: Int): ParticleOptions = DustParticleOptions(
-        Vector3f(((rgb shr 16) and 0xFF) / 255f, ((rgb shr 8) and 0xFF) / 255f, (rgb and 0xFF) / 255f),
-        1.2f,
-    )
+    private fun dust(rgb: Int): ParticleOptions = DustParticleOptions(Vec3.fromRGB24(rgb).toVector3f(), 1.2f)
 
     private fun puff(level: ServerLevel, phantom: TamedPhantomEntity, particle: ParticleOptions, saddle: Boolean) {
         val height = phantom.bbHeight.toDouble()
