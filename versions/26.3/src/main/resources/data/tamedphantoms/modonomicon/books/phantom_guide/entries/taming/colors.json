@@ -1,0 +1,36 @@
+{
+  "type": "modonomicon:content",
+  "id": "tamedphantoms:taming/colors",
+  "category": "tamedphantoms:taming",
+  "x": 0,
+  "y": 0,
+  "name": "tamedphantomscolors.guide.entry.colors",
+  "icon": "minecraft:red_dye",
+  "sort_number": 3,
+  "pages": [
+    {
+      "type": "modonomicon:text",
+      "id": "p1",
+      "title": "",
+      "text": "tamedphantomscolors.guide.md.page.colors.1"
+    },
+    {
+      "type": "modonomicon:text",
+      "id": "p2",
+      "title": "",
+      "text": "tamedphantomscolors.guide.md.page.colors.2"
+    },
+    {
+      "type": "modonomicon:text",
+      "id": "p3",
+      "title": "",
+      "text": "tamedphantomscolors.guide.page.colors.3"
+    },
+    {
+      "type": "modonomicon:text",
+      "id": "p4",
+      "title": "",
+      "text": "tamedphantomscolors.guide.page.colors.4"
+    }
+  ]
+}

@@ -42,6 +42,12 @@ object PaintGameTests {
 
     private fun saddleTop(pet: TamedPhantomEntity): Vec3 = pet.position().add(0.0, pet.bbHeight * 0.95, 0.0)
 
+    /** ПКМ в воздух, как у седока: свой маунт прицел не выбирает. */
+    private fun useInAir(player: Player, stack: ItemStack) {
+        player.setItemInHand(InteractionHand.MAIN_HAND, stack)
+        PhantomInteractionHandler.onUseItem(player, InteractionHand.MAIN_HAND)
+    }
+
     private fun check(helper: GameTestHelper, condition: Boolean, message: String) {
         helper.assertTrue(condition, message)
     }
@@ -62,6 +68,31 @@ object PaintGameTests {
         check(helper, pet.saddleDye == DyeColor.BLUE.id, "saddle should be blue, got ${pet.saddleDye}")
         check(helper, pet.bodyDye == DyeColor.RED.id, "body should stay red, got ${pet.bodyDye}")
         check(helper, blue.isEmpty, "blue dye should be spent")
+        helper.succeed()
+    }
+
+    @GameTest(template = TEMPLATE)
+    @JvmStatic
+    fun ownerPaintsFromTheSaddle(helper: GameTestHelper) {
+        val owner = helper.makeMockPlayer(GameType.SURVIVAL)
+        val pet = spawnPet(helper, owner)
+        check(helper, owner.startRiding(pet, true), "the owner should mount")
+        pet.positionRider(owner)
+        owner.xRot = 90f
+        val red = ItemStack(Items.RED_DYE, 2)
+        useInAir(owner, red)
+        check(helper, pet.bodyDye == DyeColor.RED.id, "looking down without a saddle should dye the body, got ${pet.bodyDye}")
+        check(helper, red.count == 1, "one red dye should be spent, ${red.count} left")
+        pet.equipSaddle(ItemStack(Items.SADDLE), null)
+        val blue = ItemStack(Items.BLUE_DYE)
+        useInAir(owner, blue)
+        check(helper, pet.saddleDye == DyeColor.BLUE.id, "looking down at the saddle should dye it, got ${pet.saddleDye}")
+        check(helper, pet.bodyDye == DyeColor.RED.id, "body should stay red, got ${pet.bodyDye}")
+        owner.xRot = -90f
+        val green = ItemStack(Items.GREEN_DYE)
+        useInAir(owner, green)
+        check(helper, pet.bodyDye == DyeColor.RED.id && pet.saddleDye == DyeColor.BLUE.id, "looking at the sky must not paint")
+        check(helper, green.count == 1, "the green dye must not be spent")
         helper.succeed()
     }
 

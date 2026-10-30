@@ -2,7 +2,7 @@
 # Скачивает jar зависимостей: Tamed Phantoms со страниц его GitHub Release,
 # остальное — официальные файлы Modrinth со сверкой SHA-512.
 # Аргументы: <каталог> <Tamed Phantoms> <KFF> <Patchouli NeoForge> <Fabric API>
-#            <Fabric Language Kotlin> <Patchouli Fabric> <Cloth Config>
+#            <Fabric Language Kotlin> <Patchouli Fabric> <Cloth Config> <Mod Menu> <Placeholder API>
 set -euo pipefail
 
 OUT_DIR="${1:?destination directory}"
@@ -13,6 +13,8 @@ FABRIC_API_VERSION="${5:?fabric-api version_number}"
 FABRIC_KOTLIN_VERSION="${6:?fabric-language-kotlin version_number}"
 PATCHOULI_FABRIC_VERSION="${7:?patchouli fabric version_number}"
 CLOTH_VERSION="${8:?cloth-config version_number}"
+MODMENU_VERSION="${9:?modmenu version_number}"
+PLACEHOLDER_VERSION="${10:?placeholder-api version_number}"
 USER_AGENT="${MODRINTH_USER_AGENT:-Nergan/tamedphantoms-colors-mod (https://github.com/Nergan/tamedphantoms-colors-mod)}"
 TAMED_RELEASES="https://github.com/Nergan/tamedphantoms-mod/releases/download"
 
@@ -81,3 +83,5 @@ fetch_modrinth "fabric-api" "${FABRIC_API_VERSION}"
 fetch_modrinth "fabric-language-kotlin" "${FABRIC_KOTLIN_VERSION}"
 fetch_modrinth "patchouli" "${PATCHOULI_FABRIC_VERSION}"
 fetch_modrinth "cloth-config" "${CLOTH_VERSION}"
+fetch_modrinth "modmenu" "${MODMENU_VERSION}"
+fetch_modrinth "placeholder-api" "${PLACEHOLDER_VERSION}"

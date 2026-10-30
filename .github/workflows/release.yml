@@ -31,7 +31,8 @@ jobs:
           set -euo pipefail
           prop() { grep -E "^$1=" gradle.properties | cut -d= -f2- | tr -d '\r'; }
           for key in mod_version kff_version tamedphantoms_version patchouli_version patchouli_fabric_version \
-                     fabric_api_version fabric_kotlin_version cloth_config_modrinth_version; do
+                     fabric_api_version fabric_kotlin_version cloth_config_modrinth_version \
+                     modmenu_version placeholder_api_version; do
             echo "${key}=$(prop "${key}")" >> "$GITHUB_OUTPUT"
           done
 
@@ -98,7 +99,9 @@ jobs:
             "${{ steps.versions.outputs.fabric_api_version }}" \
             "${{ steps.versions.outputs.fabric_kotlin_version }}" \
             "${{ steps.versions.outputs.patchouli_fabric_version }}" \
-            "${{ steps.versions.outputs.cloth_config_modrinth_version }}"
+            "${{ steps.versions.outputs.cloth_config_modrinth_version }}" \
+            "${{ steps.versions.outputs.modmenu_version }}" \
+            "${{ steps.versions.outputs.placeholder_api_version }}"
           cp -v "versions/26.3/build/libs/tamedphantomscolors-neoforge-26.3-${ver}.jar" release-assets/
           cp -v "versions/26.3/fabric/build/libs/tamedphantomscolors-fabric-26.3-${ver}.jar" release-assets/
           prop26() { grep -E "^$1=" versions/26.3/gradle.properties | cut -d= -f2- | tr -d '\r'; }
@@ -110,7 +113,10 @@ jobs:
             "$(prop26 kff_version)" \
             "$(prop26 fabric_api_version)" \
             "$(prop26 fabric_kotlin_version)" \
-            "$(prop26 cloth_config_modrinth_version)"
+            "$(prop26 cloth_config_modrinth_version)" \
+            "$(prop26 modmenu_version)" \
+            "$(prop26 placeholder_api_version)" \
+            "$(prop26 modonomicon_version)"
           ls -lh release-assets companions-26.3
 
       - name: Publish split GitHub releases
@@ -165,6 +171,8 @@ jobs:
           | `fabric-api-*.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) | Apache-2.0 |
           | `fabric-language-kotlin-*.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) | Apache-2.0 |
           | `cloth-config-*.jar` | Yes, for Tamed Phantoms | [Cloth Config](https://modrinth.com/mod/cloth-config) | LGPL-3.0 |
+          | `modmenu-*.jar` | No, opens the Tamed Phantoms config screen | [Mod Menu](https://modrinth.com/mod/modmenu) | MIT |
+          | `placeholder-api-*.jar` | No, needed by Mod Menu | [Placeholder API](https://modrinth.com/mod/placeholder-api) | LGPL-3.0 |
           | `Patchouli-*-FABRIC.jar` | No, only for the guidebook | [Patchouli](https://modrinth.com/mod/patchouli) | CC-BY-NC-SA-3.0 |
 
           Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) on the client; it is not bundled here. Do not install `*-sources.jar`. A line that says "requires fabric 0.100.3" means the Fabric API jar, not Fabric Loader. `all-jars.zip` contains every jar on this page.
@@ -175,6 +183,8 @@ jobs:
             release-assets/fabric-api-*.jar \
             release-assets/fabric-language-kotlin-*.jar \
             release-assets/cloth-config-*.jar \
+            release-assets/modmenu-*.jar \
+            release-assets/placeholder-api-*.jar \
             release-assets/Patchouli-*-FABRIC.jar
           stage minecraft-26.3-neoforge \
             "tamed phantoms colors for minecraft 26.3 neoforge" \
@@ -186,13 +196,15 @@ jobs:
           | `tamedphantomscolors-neoforge-26.3-${{ steps.versions.outputs.mod_version }}.jar` | Yes | this addon | MPL-2.0 |
           | `tamedphantoms-neoforge-26.3-${{ steps.versions.outputs.tamedphantoms_version }}.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) | MPL-2.0 |
           | `kotlinforforge-*.jar` | Yes | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) | LGPL-2.1 |
+          | `modonomicon-26.3-neoforge-*.jar` | No, only for the guidebook | [Modonomicon](https://modrinth.com/mod/modonomicon) | MIT, CC-BY-4.0 |
 
-          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so there is no guidebook page. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so the guidebook uses Modonomicon; this addon adds its Colors entry. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
           EOF
           )" \
             release-assets/tamedphantomscolors-neoforge-26.3-*.jar \
             companions-26.3/tamedphantoms-neoforge-26.3-*.jar \
-            companions-26.3/kotlinforforge-*.jar
+            companions-26.3/kotlinforforge-*.jar \
+            companions-26.3/modonomicon-26.3-neoforge-*.jar
           stage minecraft-26.3-fabric \
             "tamed phantoms colors for minecraft 26.3 fabric" \
             "$(cat <<'EOF'
@@ -205,15 +217,21 @@ jobs:
           | `fabric-api-*.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) | Apache-2.0 |
           | `fabric-language-kotlin-*.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) | Apache-2.0 |
           | `cloth-config-*.jar` | Yes, for Tamed Phantoms | [Cloth Config](https://modrinth.com/mod/cloth-config) | LGPL-3.0 |
+          | `modmenu-*.jar` | No, opens the Tamed Phantoms config screen | [Mod Menu](https://modrinth.com/mod/modmenu) | MIT |
+          | `placeholder-api-*.jar` | No, needed by Mod Menu | [Placeholder API](https://modrinth.com/mod/placeholder-api) | LGPL-3.0 |
+          | `modonomicon-26.3-fabric-*.jar` | No, only for the guidebook | [Modonomicon](https://modrinth.com/mod/modonomicon) | MIT, CC-BY-4.0 |
 
-          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so there is no guidebook page. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) 4.13.0+26.3 on the client; it is not bundled here. Patchouli has no 26.3 build, so the guidebook uses Modonomicon; this addon adds its Colors entry. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
           EOF
           )" \
             release-assets/tamedphantomscolors-fabric-26.3-*.jar \
             companions-26.3/tamedphantoms-fabric-26.3-*.jar \
             companions-26.3/fabric-api-*.jar \
             companions-26.3/fabric-language-kotlin-*.jar \
-            companions-26.3/cloth-config-*.jar
+            companions-26.3/cloth-config-*.jar \
+            companions-26.3/modmenu-*.jar \
+            companions-26.3/placeholder-api-*.jar \
+            companions-26.3/modonomicon-26.3-fabric-*.jar
           python3 .github/scripts/publish-split-releases.py release-split
 
       - name: Check Modrinth token
@@ -316,6 +334,7 @@ jobs:
             tamed-phantoms(required){modrinth:tamed-phantoms}
             kotlin-for-forge(required){modrinth:ordsPcFz}
             lambdynamiclights(optional){modrinth:yBW8D80W}
+            modonomicon(optional){modrinth:692GClaE}
 
       - name: Publish Modrinth 26.3 Fabric
         if: steps.modrinth_token.outputs.present == 'true'
@@ -341,6 +360,7 @@ jobs:
             fabric-api(required){modrinth:P7dR8mSH}
             fabric-language-kotlin(required){modrinth:Ha28R6CL}
             lambdynamiclights(optional){modrinth:yBW8D80W}
+            modonomicon(optional){modrinth:692GClaE}
 
       - name: Delete replaced Modrinth versions
         if: steps.modrinth_token.outputs.present == 'true'

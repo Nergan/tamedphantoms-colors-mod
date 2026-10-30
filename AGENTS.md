@@ -10,7 +10,9 @@
 - Достижения — JSON с критерием `minecraft:impossible` в `data/tamedphantomscolors/advancement`, выдаёт их `paint/ColorAdvancements.kt`. Родители в дереве — достижения Tamed Phantoms.
 - Tamed Phantoms берётся со страниц его GitHub Release через ivy-репозиторий в Gradle: группа — тег страницы, модуль — имя jar без версии. Страница держит только текущий jar родителя. После нового `mod_version` родителя подними здесь `tamedphantoms_version` и `tamedphantoms_version_range`, иначе CI не найдёт файл. Пока нужной версии родителя в релизе нет, собирай с `-Ptamedphantoms_local=<каталог tamedphantoms-mod>` после его сборки.
 - LambDynamicLights — только `compileOnly`. Точка входа — `compat/ColorsDynamicLights`: в `fabric.mod.json` ключ `lambdynlights:initializer`, в `neoforge.mods.toml` таблица `[modproperties."${mod_id}"."yumi:entrypoints"]`. На 1.21.1 у NeoForge и Fabric классификатор `mojmap`: API собран Loom 1.16, и Loom 1.9.2 его не переназначает. Свет движка одноцветный: цвет краски на блоки не ложится.
-- Страница книги лежит в пространстве имён родителя: `assets/tamedphantoms/patchouli_books/phantom_guide/en_us/entries/`. Ключ `extend` Patchouli убрал в 1.20, его не используй.
+- Страница книги лежит в пространстве имён родителя: `assets/tamedphantoms/patchouli_books/phantom_guide/en_us/entries/`. Ключ `extend` Patchouli убрал в 1.20, его не используй. На 26.3 книга родителя — Modonomicon: запись аддона лежит в `versions/26.3/src/main/resources/data/tamedphantoms/modonomicon/books/phantom_guide/entries/`, тексты с разметкой Patchouli идут туда через ключи `tamedphantomscolors.guide.md.*` в markdown. Правишь текст книги — правь и их.
+- Предметы, которые работают с седла, аддон называет родителю через `registerRiderTool` на обеих сторонах.
+- Страницы релиза несут всё, что нужно и родителю: на Fabric ещё Mod Menu и Placeholder API, на 26.3 — Modonomicon. Версии те же, что в `gradle.properties` родителя.
 - McnCDN у аддона нет: новый пакет на CDN не заводи без прямой просьбы владельца.
 - Коммит и пуш — только когда владелец прямо просит. Теги `minecraft-*` двигает workflow релиза.
 

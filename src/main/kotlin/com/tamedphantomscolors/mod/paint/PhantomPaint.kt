@@ -21,12 +21,16 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.phys.Vec3
 
-/** Краситель, светящиеся чернила и кисть по фантому. Родитель зовёт это только на сервере. */
+/**
+ * Краситель, светящиеся чернила и кисть по фантому. Родитель зовёт клик только на сервере,
+ * а с седла — когда седок смотрит на своего фантома с этим предметом в руке.
+ */
 object PhantomPaint {
 
     fun register() {
         TamedPhantomsApi.registerInteraction(::onInteract)
         TamedPhantomsApi.registerReleaseListener(::onReleased)
+        TamedPhantomsApi.registerRiderTool { stack -> toolOf(stack) != null }
     }
 
     private fun onInteract(
