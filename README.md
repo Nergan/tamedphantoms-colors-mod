@@ -25,7 +25,7 @@ Jars live on [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mo
 | File | Required | What it is |
 | --- | --- | --- |
 | `tamedphantomscolors-neoforge-1.21.1-1.2.1.jar` | Yes | this addon |
-| `tamedphantoms-neoforge-1.21.1-1.0.9.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.9 or newer |
+| `tamedphantoms-neoforge-1.21.1-1.0.10.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.10 or newer |
 | `kotlinforforge-5.8.0-all.jar` | Yes | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
 | `Patchouli-1.21.1-93-NEOFORGE.jar` | No | [Patchouli](https://modrinth.com/mod/patchouli), only for the guidebook |
 
@@ -34,7 +34,7 @@ Jars live on [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mo
 | File | Required | What it is |
 | --- | --- | --- |
 | `tamedphantomscolors-fabric-1.21.1-1.2.1.jar` | Yes | this addon |
-| `tamedphantoms-fabric-1.21.1-1.0.9.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.9 or newer |
+| `tamedphantoms-fabric-1.21.1-1.0.10.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.10 or newer |
 | `fabric-api-0.116.17+1.21.1.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | `fabric-language-kotlin-1.13.2+kotlin.2.1.20.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
 | `cloth-config-15.0.140-fabric.jar` | Yes | [Cloth Config](https://modrinth.com/mod/cloth-config), required by Tamed Phantoms |
@@ -47,7 +47,7 @@ Jars live on [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mo
 | File | Required | What it is |
 | --- | --- | --- |
 | `tamedphantomscolors-neoforge-26.3-1.2.1.jar` | Yes | this addon |
-| `tamedphantoms-neoforge-26.3-1.0.9.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.9 or newer |
+| `tamedphantoms-neoforge-26.3-1.0.10.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.10 or newer |
 | `kotlinforforge-6.4.0-all.jar` | Yes | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
 | `modonomicon-26.3-neoforge-2.20.0.jar` | No | [Modonomicon](https://modrinth.com/mod/modonomicon), only for the guidebook |
 
@@ -56,7 +56,7 @@ Jars live on [GitHub Releases](https://github.com/Nergan/tamedphantoms-colors-mo
 | File | Required | What it is |
 | --- | --- | --- |
 | `tamedphantomscolors-fabric-26.3-1.2.1.jar` | Yes | this addon |
-| `tamedphantoms-fabric-26.3-1.0.9.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.9 or newer |
+| `tamedphantoms-fabric-26.3-1.0.10.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.10 or newer |
 | `fabric-api-0.162.0+26.3.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | `fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
 | `cloth-config-fabric-26.3.159.jar` | Yes | [Cloth Config](https://modrinth.com/mod/cloth-config), required by Tamed Phantoms |
@@ -70,7 +70,7 @@ LambDynamicLights is not bundled: install it from [Modrinth](https://modrinth.co
 
 | Component | 1.21.1 | 26.3 |
 | --- | --- | --- |
-| Tamed Phantoms | 1.0.9 or newer, same loader | 1.0.9 or newer, same loader |
+| Tamed Phantoms | 1.0.10 or newer, same loader | 1.0.10 or newer, same loader |
 | NeoForge | 21.1.209 or newer | 26.3.0.76 or newer |
 | Kotlin for Forge | 5.8.0, **NeoForge** build | 6.4.0 |
 | Fabric Loader | 0.16.10 or newer | 0.19.5 or newer |
@@ -82,7 +82,7 @@ LambDynamicLights is not bundled: install it from [Modrinth](https://modrinth.co
 
 ## Installation
 
-1. Install Tamed Phantoms 1.0.9 or newer with its requirements for your Minecraft version and loader. The release pages of this addon carry all of them.
+1. Install Tamed Phantoms 1.0.10 or newer with its requirements for your Minecraft version and loader. The release pages of this addon carry all of them.
 2. Put the addon jar for the same version and loader into `mods`.
 3. Optionally add LambDynamicLights on each client for real light, and the book mod for the guidebook entry.
 
