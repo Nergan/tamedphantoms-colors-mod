@@ -1,0 +1,6 @@
+{
+  "tamedphantomscolors.guide.entry.colors": "Colors",
+  "tamedphantomscolors.guide.page.colors.1": "The owner can $(pet)dye$() a tamed phantom: use any $(item)dye$() on it with the right mouse button. The body takes the color, the eyes keep their own, and the trail from its wings turns the same color. Use a dye on the $(item)saddle$() to color the saddle alone.",
+  "tamedphantomscolors.guide.page.colors.2": "A $(item)glow ink sac$() makes the phantom glow like a lamp: it is drawn at full brightness, and with $(thing)LambDynamicLights$() it also lights up everything around it. A $(item)brush$() washes the paint and the glow off the phantom and its saddle. The phantom gives a dry shake, and the brush wears a little.",
+  "tamedphantomscolors.guide.page.colors.3": "A released phantom will not be painted: it bristles, growls, and attacks whoever tried for a while. When you release a painted phantom, it shakes the paint off in a colored spray and returns to its natural color. A saddle that comes off loses its color too."
+}

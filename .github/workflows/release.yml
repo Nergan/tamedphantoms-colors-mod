@@ -1,0 +1,236 @@
+name: Release
+
+on:
+  push:
+    branches: ["main"]
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+# Пуш в main пересобирает аддон и заново ставит страницы GitHub Release
+# minecraft-1.21.1-neoforge и minecraft-1.21.1-fabric, затем версии Modrinth.
+# SHA-256 у каждого файла считает сам GitHub. McnCDN у аддона нет.
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read versions from gradle.properties
+        id: versions
+        run: |
+          set -euo pipefail
+          prop() { grep -E "^$1=" gradle.properties | cut -d= -f2- | tr -d '\r'; }
+          for key in mod_version kff_version tamedphantoms_version patchouli_version patchouli_fabric_version \
+                     fabric_api_version fabric_kotlin_version cloth_config_modrinth_version; do
+            echo "${key}=$(prop "${key}")" >> "$GITHUB_OUTPUT"
+          done
+
+      - name: Check tag matches mod_version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          set -euo pipefail
+          expected="v${{ steps.versions.outputs.mod_version }}"
+          actual="${GITHUB_REF_NAME}"
+          if [[ "${actual}" != "${expected}" ]]; then
+            echo "Tag ${actual} must be ${expected} (mod_version in gradle.properties)."
+            exit 1
+          fi
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.11"
+
+      - name: Build and test
+        run: gradle build --stacktrace
+
+      - name: Collect release jars
+        run: |
+          set -euo pipefail
+          mkdir -p release-assets
+          ver="${{ steps.versions.outputs.mod_version }}"
+          cp -v "build/libs/tamedphantomscolors-neoforge-1.21.1-${ver}.jar" release-assets/
+          cp -v "fabric/build/libs/tamedphantomscolors-fabric-1.21.1-${ver}.jar" release-assets/
+          chmod +x .github/scripts/fetch-companion-jars.sh
+          .github/scripts/fetch-companion-jars.sh \
+            release-assets \
+            "${{ steps.versions.outputs.tamedphantoms_version }}" \
+            "${{ steps.versions.outputs.kff_version }}" \
+            "${{ steps.versions.outputs.patchouli_version }}" \
+            "${{ steps.versions.outputs.fabric_api_version }}" \
+            "${{ steps.versions.outputs.fabric_kotlin_version }}" \
+            "${{ steps.versions.outputs.patchouli_fabric_version }}" \
+            "${{ steps.versions.outputs.cloth_config_modrinth_version }}"
+          ls -lh release-assets
+
+      - name: Publish split GitHub releases
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LEGACY_TAG: v${{ steps.versions.outputs.mod_version }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          shopt -s nullglob
+          rm -rf release-split
+          stage() {
+            local tag="$1"
+            local title="$2"
+            local body="$3"
+            shift 3
+            local dir="release-split/${tag}"
+            mkdir -p "${dir}"
+            printf '%s\n' "${title}" > "${dir}/title.txt"
+            printf '%s\n' "${body}" > "${dir}/body.md"
+            cp -v "$@" "${dir}/"
+          }
+          stage minecraft-1.21.1-neoforge \
+            "tamed phantoms colors for minecraft 1.21.1 neoforge" \
+            "$(cat <<'EOF'
+          Minecraft **1.21.1** / NeoForge. Put the jars you need into the `mods` folder.
+
+          | File | Required | Source | License |
+          | --- | --- | --- | --- |
+          | `tamedphantomscolors-neoforge-1.21.1-${{ steps.versions.outputs.mod_version }}.jar` | Yes | this addon | MPL-2.0 |
+          | `tamedphantoms-neoforge-1.21.1-${{ steps.versions.outputs.tamedphantoms_version }}.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) | MPL-2.0 |
+          | `kotlinforforge-*.jar` | Yes | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) | LGPL-2.1 |
+          | `Patchouli-*-NEOFORGE.jar` | No, only for the guidebook | [Patchouli](https://modrinth.com/mod/patchouli) | CC-BY-NC-SA-3.0 |
+
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) on the client; it is not bundled here. Do not install `*-sources.jar`. `all-jars.zip` contains every jar on this page.
+          EOF
+          )" \
+            release-assets/tamedphantomscolors-neoforge-1.21.1-*.jar \
+            release-assets/tamedphantoms-neoforge-1.21.1-*.jar \
+            release-assets/kotlinforforge-*.jar \
+            release-assets/Patchouli-*-NEOFORGE.jar
+          stage minecraft-1.21.1-fabric \
+            "tamed phantoms colors for minecraft 1.21.1 fabric" \
+            "$(cat <<'EOF'
+          Minecraft **1.21.1** / Fabric. Put the jars you need into the `mods` folder.
+
+          | File | Required | Source | License |
+          | --- | --- | --- | --- |
+          | `tamedphantomscolors-fabric-1.21.1-${{ steps.versions.outputs.mod_version }}.jar` | Yes | this addon | MPL-2.0 |
+          | `tamedphantoms-fabric-1.21.1-${{ steps.versions.outputs.tamedphantoms_version }}.jar` | Yes | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) | MPL-2.0 |
+          | `fabric-api-*.jar` | Yes | [Fabric API](https://modrinth.com/mod/fabric-api) | Apache-2.0 |
+          | `fabric-language-kotlin-*.jar` | Yes | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) | Apache-2.0 |
+          | `cloth-config-*.jar` | Yes, for Tamed Phantoms | [Cloth Config](https://modrinth.com/mod/cloth-config) | LGPL-3.0 |
+          | `Patchouli-*-FABRIC.jar` | No, only for the guidebook | [Patchouli](https://modrinth.com/mod/patchouli) | CC-BY-NC-SA-3.0 |
+
+          Real light from a glowing phantom needs [LambDynamicLights](https://modrinth.com/mod/lambdynamiclights) on the client; it is not bundled here. Do not install `*-sources.jar`. A line that says "requires fabric 0.100.3" means the Fabric API jar, not Fabric Loader. `all-jars.zip` contains every jar on this page.
+          EOF
+          )" \
+            release-assets/tamedphantomscolors-fabric-1.21.1-*.jar \
+            release-assets/tamedphantoms-fabric-1.21.1-*.jar \
+            release-assets/fabric-api-*.jar \
+            release-assets/fabric-language-kotlin-*.jar \
+            release-assets/cloth-config-*.jar \
+            release-assets/Patchouli-*-FABRIC.jar
+          python3 .github/scripts/publish-split-releases.py release-split
+
+      - name: Check Modrinth token
+        id: modrinth_token
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${MODRINTH_TOKEN}" ]]; then
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "MODRINTH_TOKEN is empty. Modrinth publish will be skipped."
+            exit 0
+          fi
+          echo "present=true" >> "$GITHUB_OUTPUT"
+
+      - name: Replace Modrinth versions
+        if: steps.modrinth_token.outputs.present == 'true'
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/replace-modrinth-versions.py \
+            tamed-phantoms-colors \
+            "${{ steps.versions.outputs.mod_version }}" \
+            "${{ steps.versions.outputs.mod_version }}-fabric"
+
+      - name: Publish Modrinth
+        if: steps.modrinth_token.outputs.present == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: tamed-phantoms-colors
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: true
+          name: ${{ steps.versions.outputs.mod_version }}
+          version: ${{ steps.versions.outputs.mod_version }}
+          version-type: release
+          changelog: |
+            Minecraft 1.21.1 / NeoForge. Tamed Phantoms Colors ${{ steps.versions.outputs.mod_version }}.
+          loaders: |
+            neoforge
+          game-versions: |
+            1.21.1
+          java: |
+            21
+          files: release-assets/tamedphantomscolors-neoforge-1.21.1-${{ steps.versions.outputs.mod_version }}.jar
+          dependencies: |
+            tamed-phantoms(required){modrinth:tamed-phantoms}
+            kotlin-for-forge(required){modrinth:ordsPcFz}
+            lambdynamiclights(optional){modrinth:yBW8D80W}
+            patchouli(optional){modrinth:nU0bVIaL}
+
+      - name: Publish Modrinth Fabric
+        if: steps.modrinth_token.outputs.present == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          modrinth-id: tamed-phantoms-colors
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          modrinth-featured: false
+          name: ${{ steps.versions.outputs.mod_version }} Fabric
+          version: ${{ steps.versions.outputs.mod_version }}-fabric
+          version-type: release
+          changelog: |
+            Minecraft 1.21.1 / Fabric. Tamed Phantoms Colors ${{ steps.versions.outputs.mod_version }}.
+          loaders: |
+            fabric
+          game-versions: |
+            1.21.1
+          java: |
+            21
+          files: release-assets/tamedphantomscolors-fabric-1.21.1-${{ steps.versions.outputs.mod_version }}.jar
+          dependencies: |
+            tamed-phantoms(required){modrinth:tamed-phantoms}
+            fabric-api(required){modrinth:P7dR8mSH}
+            fabric-language-kotlin(required){modrinth:Ha28R6CL}
+            lambdynamiclights(optional){modrinth:yBW8D80W}
+            patchouli(optional){modrinth:nU0bVIaL}
+
+      - name: Delete replaced Modrinth versions
+        if: steps.modrinth_token.outputs.present == 'true'
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/replace-modrinth-versions.py --finish release-assets/modrinth-delete-after-publish.txt
+
+      - name: Update Modrinth description
+        if: steps.modrinth_token.outputs.present == 'true'
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/update-modrinth-body.py tamed-phantoms-colors modrinth.md
