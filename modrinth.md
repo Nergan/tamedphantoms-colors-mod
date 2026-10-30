@@ -16,18 +16,18 @@ Only the owner can paint, light up, or clean a phantom and its saddle. The addon
 
 ## 1.21.1 NeoForge
 
-Required: `tamedphantomscolors-neoforge-1.21.1-1.2.0.jar`, Tamed Phantoms 1.0.7 or newer, and Kotlin for Forge 5.8.0 (`kotlinforforge-neoforge`). Optional: LambDynamicLights 4.8.11+1.21.1 for real light, Patchouli `1.21.1-93-neoforge` for the guidebook entry.
+Required: `tamedphantomscolors-neoforge-1.21.1-1.2.1.jar`, Tamed Phantoms 1.0.8 or newer, and Kotlin for Forge 5.8.0 (`kotlinforforge-neoforge`). Optional: LambDynamicLights 4.8.11+1.21.1 for real light, Patchouli `1.21.1-93-neoforge` for the guidebook entry.
 
 ## 1.21.1 Fabric
 
-Required: `tamedphantomscolors-fabric-1.21.1-1.2.0.jar`, Tamed Phantoms `1.0.7-fabric` or newer, Fabric API `0.116.17+1.21.1`, Fabric Language Kotlin `1.13.2+kotlin.2.1.20`, and Cloth Config `15.0.140` for Tamed Phantoms. Optional: Mod Menu 11.0.4 with Text Placeholder API for the Tamed Phantoms config screen, LambDynamicLights 4.8.11+1.21.1 for real light, Patchouli `1.21.1-93-fabric` for the guidebook entry.
+Required: `tamedphantomscolors-fabric-1.21.1-1.2.1.jar`, Tamed Phantoms `1.0.8-fabric` or newer, Fabric API `0.116.17+1.21.1`, Fabric Language Kotlin `1.13.2+kotlin.2.1.20`, and Cloth Config `15.0.140` for Tamed Phantoms. Optional: Mod Menu 11.0.4 with Text Placeholder API for the Tamed Phantoms config screen, LambDynamicLights 4.8.11+1.21.1 for real light, Patchouli `1.21.1-93-fabric` for the guidebook entry.
 
 ## 26.3 NeoForge
 
-Required: `tamedphantomscolors-neoforge-26.3-1.2.0.jar`, Tamed Phantoms `1.0.7+26.3` or newer, and Kotlin for Forge 6.4.0. Optional: LambDynamicLights 4.13.0+26.3 for real light, Modonomicon `26.3-2.20.0` for the guidebook entry.
+Required: `tamedphantomscolors-neoforge-26.3-1.2.1.jar`, Tamed Phantoms `1.0.8+26.3` or newer, and Kotlin for Forge 6.4.0. Optional: LambDynamicLights 4.13.0+26.3 for real light, Modonomicon `26.3-2.20.0` for the guidebook entry.
 
 ## 26.3 Fabric
 
-Required: `tamedphantomscolors-fabric-26.3-1.2.0.jar`, Tamed Phantoms `1.0.7+26.3-fabric` or newer, Fabric API `0.162.0+26.3`, Fabric Language Kotlin `1.14.2+kotlin.2.4.21`, and Cloth Config `26.3.159` for Tamed Phantoms. Optional: Mod Menu 21.0.0 with Text Placeholder API for the config screen, LambDynamicLights 4.13.0+26.3 for real light, Modonomicon `26.3-2.20.0` for the guidebook entry.
+Required: `tamedphantomscolors-fabric-26.3-1.2.1.jar`, Tamed Phantoms `1.0.8+26.3-fabric` or newer, Fabric API `0.162.0+26.3`, Fabric Language Kotlin `1.14.2+kotlin.2.4.21`, and Cloth Config `26.3.159` for Tamed Phantoms. Optional: Mod Menu 21.0.0 with Text Placeholder API for the config screen, LambDynamicLights 4.13.0+26.3 for real light, Modonomicon `26.3-2.20.0` for the guidebook entry.
 
 The source code and every release jar, with all the jars Tamed Phantoms needs, are on [GitHub](https://github.com/Nergan/tamedphantoms-colors-mod). License: MPL-2.0.

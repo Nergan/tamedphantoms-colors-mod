@@ -24,8 +24,8 @@
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-neoforge-1.21.1-1.2.0.jar` | Да | этот аддон |
-| `tamedphantoms-neoforge-1.21.1-1.0.7.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.7 или новее |
+| `tamedphantomscolors-neoforge-1.21.1-1.2.1.jar` | Да | этот аддон |
+| `tamedphantoms-neoforge-1.21.1-1.0.8.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.8 или новее |
 | `kotlinforforge-5.8.0-all.jar` | Да | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
 | `Patchouli-1.21.1-93-NEOFORGE.jar` | Нет | [Patchouli](https://modrinth.com/mod/patchouli), только для книги |
 
@@ -33,8 +33,8 @@
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-fabric-1.21.1-1.2.0.jar` | Да | этот аддон |
-| `tamedphantoms-fabric-1.21.1-1.0.7.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.7 или новее |
+| `tamedphantomscolors-fabric-1.21.1-1.2.1.jar` | Да | этот аддон |
+| `tamedphantoms-fabric-1.21.1-1.0.8.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.8 или новее |
 | `fabric-api-0.116.17+1.21.1.jar` | Да | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | `fabric-language-kotlin-1.13.2+kotlin.2.1.20.jar` | Да | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
 | `cloth-config-15.0.140-fabric.jar` | Да | [Cloth Config](https://modrinth.com/mod/cloth-config), его требует Tamed Phantoms |
@@ -46,8 +46,8 @@
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-neoforge-26.3-1.2.0.jar` | Да | этот аддон |
-| `tamedphantoms-neoforge-26.3-1.0.7.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.7 или новее |
+| `tamedphantomscolors-neoforge-26.3-1.2.1.jar` | Да | этот аддон |
+| `tamedphantoms-neoforge-26.3-1.0.8.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.8 или новее |
 | `kotlinforforge-6.4.0-all.jar` | Да | [Kotlin for Forge](https://modrinth.com/mod/kotlin-for-forge) |
 | `modonomicon-26.3-neoforge-2.20.0.jar` | Нет | [Modonomicon](https://modrinth.com/mod/modonomicon), только для книги |
 
@@ -55,8 +55,8 @@
 
 | Файл | Обязателен | Что это |
 | --- | --- | --- |
-| `tamedphantomscolors-fabric-26.3-1.2.0.jar` | Да | этот аддон |
-| `tamedphantoms-fabric-26.3-1.0.7.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.7 или новее |
+| `tamedphantomscolors-fabric-26.3-1.2.1.jar` | Да | этот аддон |
+| `tamedphantoms-fabric-26.3-1.0.8.jar` | Да | [Tamed Phantoms](https://github.com/Nergan/tamedphantoms-mod) 1.0.8 или новее |
 | `fabric-api-0.162.0+26.3.jar` | Да | [Fabric API](https://modrinth.com/mod/fabric-api) |
 | `fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar` | Да | [Fabric Language Kotlin](https://modrinth.com/mod/fabric-language-kotlin) |
 | `cloth-config-fabric-26.3.159.jar` | Да | [Cloth Config](https://modrinth.com/mod/cloth-config), его требует Tamed Phantoms |
@@ -70,7 +70,7 @@ LambDynamicLights в релиз не входит: для настоящего �
 
 | Компонент | 1.21.1 | 26.3 |
 | --- | --- | --- |
-| Tamed Phantoms | 1.0.7 или новее, того же загрузчика | 1.0.7 или новее, того же загрузчика |
+| Tamed Phantoms | 1.0.8 или новее, того же загрузчика | 1.0.8 или новее, того же загрузчика |
 | NeoForge | 21.1.209 или новее | 26.3.0.76 или новее |
 | Kotlin for Forge | 5.8.0, сборка **NeoForge** | 6.4.0 |
 | Fabric Loader | 0.16.10 или новее | 0.19.5 или новее |
@@ -82,7 +82,7 @@ LambDynamicLights в релиз не входит: для настоящего �
 
 ## Установка
 
-1. Поставьте Tamed Phantoms 1.0.7 или новее со всеми его зависимостями для своей версии Minecraft и загрузчика. Они все есть на страницах релиза этого аддона.
+1. Поставьте Tamed Phantoms 1.0.8 или новее со всеми его зависимостями для своей версии Minecraft и загрузчика. Они все есть на страницах релиза этого аддона.
 2. Положите в `mods` jar аддона для той же версии и загрузчика.
 3. По желанию добавьте LambDynamicLights на каждый клиент для настоящего света и мод книг для записи в книге.
 
