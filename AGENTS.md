@@ -13,7 +13,7 @@
 - Страница книги лежит в пространстве имён родителя: `assets/tamedphantoms/patchouli_books/phantom_guide/en_us/entries/`. Ключ `extend` Patchouli убрал в 1.20, его не используй. На 26.3 книга родителя — Modonomicon: запись аддона лежит в `versions/26.3/src/main/resources/data/tamedphantoms/modonomicon/books/phantom_guide/entries/`, тексты с разметкой Patchouli идут туда через ключи `tamedphantomscolors.guide.md.*` в markdown. Правишь текст книги — правь и их.
 - Предметы, которые работают с седла, аддон называет родителю через `registerRiderTool` на обеих сторонах.
 - Страницы релиза несут всё, что нужно и родителю: на Fabric ещё Mod Menu и Placeholder API, на 26.3 — Modonomicon. Версии те же, что в `gradle.properties` родителя.
-- McnCDN у аддона нет: новый пакет на CDN не заводи без прямой просьбы владельца.
+- McnCDN у аддона нет: новый пакет на CDN не заводи без прямой просьбы владельца. Скилл CDN, если запись всё же понадобится: https://cdn.mikchan.net/ai/SKILL.md. Перед записью снова вызови `GET https://cdn.mikchan.net/version`. Токен не печатать.
 - Коммит и пуш — только когда владелец прямо просит. Теги `minecraft-*` двигает workflow релиза.
 
 ## Сборка 26.3
