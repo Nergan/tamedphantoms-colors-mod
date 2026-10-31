@@ -22,7 +22,7 @@
     "java": ">=25",
     "fabric-api": "*",
     "fabric-language-kotlin": ">=1.14.2+kotlin.2.4.21",
-    "tamedphantoms": ">=1.0.11"
+    "tamedphantoms": ">=1.0.12"
   },
   "suggests": {
     "lambdynlights": "*"
