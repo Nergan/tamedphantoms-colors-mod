@@ -97,9 +97,13 @@ dependencies {
 tasks.processResources {
     val version = project.version.toString()
     inputs.property("version", version)
+    inputs.property("tamedphantoms_version", tamedPhantomsVersion)
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     filesMatching("fabric.mod.json") {
-        filter { line -> line.replace("\${version}", version) }
+        filter { line ->
+            line.replace("\${version}", version)
+                .replace("\${tamedphantoms_version}", tamedPhantomsVersion)
+        }
     }
 }
 
