@@ -1,6 +1,6 @@
 # Tamed Phantoms Colors — инструкции для AI-агентов
 
-Аддон Minecraft 1.21.1 и 26.3 для NeoForge и Fabric к `tamedphantoms-mod`: краситель, светящиеся чернила и кисть по прирученному фантому. Общие правила — `../AGENTS.md`. Раскладка как у родителя: общий код в `src/main`, NeoForge в `src/neoforge`, Fabric в проекте `fabric/`. Сборка 26.3 — отдельный проект `versions/26.3`.
+Аддон Minecraft 1.21.1 и 26.3 для NeoForge и Fabric к `tamedphantoms-mod`: краситель, светящиеся чернила и кисть по прирученному фантому. Общие правила — `../../AGENTS.md`. Раскладка как у родителя: общий код в `src/main`, NeoForge в `src/neoforge`, Fabric в проекте `fabric/`. Сборка 26.3 — отдельный проект `versions/26.3`.
 
 ## Полная актуализация
 
