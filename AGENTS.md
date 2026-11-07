@@ -27,3 +27,7 @@
 ## Готово
 
 Из каталога аддона: `gradle build --stacktrace` (Gradle 8.11, JDK 21) и `gradle runGameTestServer`, затем `runClient` и `:fabric:runClient` до главного меню, `runServer` и `:fabric:runServer` до `Done`. То же в `versions/26.3` на Gradle 9.7.0 и JDK 25, сервер слушает `25567`. Логику кликов и выдачу достижений проверяет `runGameTestServer` (NeoForge 1.21.1): тесты в `src/gametest`, в jar они не попадают. Для проверки света положи jar LambDynamicLights в `run/mods` и `fabric/run/mods`. Рантайм 4.8.11 на 1.21.1 требует Fabric Loader 0.18.4 или новее, поэтому Fabric 1.21.1 с ним запускай с `-Pfabric_loader_version=0.19.5`, как в сборке игроков. В `gradle.properties` версию загрузчика ради этого не поднимай.
+
+## Modrinth
+
+На Modrinth у каждой пары версии Minecraft и загрузчика одна версия: самая новая. Релиз снимает прежние версии этого слота и ставит на их место текущий jar.
