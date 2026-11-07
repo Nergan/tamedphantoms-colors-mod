@@ -1,0 +1,25 @@
+name: Modrinth icon
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  icon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set Modrinth project icon
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [[ -z "${MODRINTH_TOKEN}" ]]; then
+            echo "MODRINTH_TOKEN is empty."
+            exit 1
+          fi
+          python3 .github/scripts/set-modrinth-icon.py tamed-phantoms-colors src/main/resources/logo.png

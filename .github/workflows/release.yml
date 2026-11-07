@@ -377,3 +377,11 @@ jobs:
         run: |
           set -euo pipefail
           python3 .github/scripts/update-modrinth-body.py tamed-phantoms-colors modrinth.md
+
+      - name: Set Modrinth icon
+        if: steps.modrinth_token.outputs.present == 'true'
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          python3 .github/scripts/set-modrinth-icon.py tamed-phantoms-colors src/main/resources/logo.png
